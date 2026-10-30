@@ -1,0 +1,506 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ofrenda - Día de Muertos</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Georgia, serif;
+    background: #160d16;
+    color: #fff5df;
+    min-height: 100vh;
+}
+
+/* ENCABEZADO */
+
+header {
+    text-align: center;
+    padding: 35px 15px;
+    background: linear-gradient(135deg, #290d20, #481528, #1a0b19);
+    border-bottom: 3px solid #d99432;
+}
+
+header h1 {
+    color: #f6b844;
+    font-size: clamp(28px, 5vw, 48px);
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    text-shadow: 0 0 15px #d77a19;
+}
+
+header p {
+    margin-top: 12px;
+    color: #e9c6a0;
+    font-size: 15px;
+}
+
+/* DECORACIÓN */
+
+.decoracion {
+    color: #f5a623;
+    font-size: 25px;
+    letter-spacing: 12px;
+    margin-bottom: 12px;
+}
+
+/* CONTENEDOR */
+
+.contenedor {
+    width: 95%;
+    max-width: 1200px;
+    margin: 30px auto;
+}
+
+.progreso {
+    text-align: center;
+    padding: 18px;
+    margin-bottom: 25px;
+    background: #301629;
+    border: 1px solid #a66b37;
+    border-radius: 15px;
+}
+
+.progreso h3 {
+    color: #f6bd55;
+    margin-bottom: 12px;
+}
+
+.barra {
+    width: 100%;
+    max-width: 450px;
+    height: 13px;
+    background: #180d18;
+    border-radius: 20px;
+    margin: auto;
+    overflow: hidden;
+}
+
+.relleno {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #e78b20, #f6c75b);
+    transition: width .5s;
+}
+
+/* DISTRIBUCIÓN */
+
+.contenido {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: 25px;
+}
+
+/* ALTAR */
+
+.area-altar {
+    background: radial-gradient(circle, #49213a, #24101f);
+    border: 2px solid #b47a37;
+    border-radius: 18px;
+    padding: 25px 15px;
+    text-align: center;
+    box-shadow: 0 0 25px #000;
+}
+
+.area-altar h2 {
+    color: #f6bd55;
+    margin-bottom: 25px;
+    letter-spacing: 2px;
+}
+
+.nivel {
+    background: linear-gradient(90deg, #6d2a35, #9a493c, #6d2a35);
+    border: 2px solid #d99a47;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 18px auto;
+    min-height: 110px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    box-shadow: 0 8px 12px #100810;
+    max-width: 550px;
+}
+
+.nivel:nth-of-type(2) {
+    max-width: 430px;
+}
+
+.nivel:nth-of-type(3) {
+    max-width: 310px;
+}
+
+.espacio {
+    width: 90px;
+    height: 75px;
+    border: 2px dashed #f5c46a;
+    border-radius: 10px;
+    background: #301526;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 32px;
+    transition: .3s;
+}
+
+.espacio.correcto {
+    border: 2px solid #f5bc55;
+    background: #54263a;
+}
+
+.espacio:hover {
+    background: #71364a;
+}
+
+.base {
+    height: 15px;
+    max-width: 580px;
+    background: #b87b35;
+    margin: auto;
+    border-radius: 5px;
+}
+
+/* BANDEJA */
+
+.bandeja {
+    background: #301629;
+    padding: 20px;
+    border: 1px solid #a66b37;
+    border-radius: 18px;
+    height: fit-content;
+}
+
+.bandeja h2 {
+    text-align: center;
+    color: #f6bd55;
+    margin-bottom: 10px;
+}
+
+.bandeja p {
+    text-align: center;
+    font-size: 12px;
+    color: #d9b9a3;
+    margin-bottom: 20px;
+}
+
+.elemento {
+    background: linear-gradient(135deg, #593044, #3b1c32);
+    border: 1px solid #b47a37;
+    border-radius: 10px;
+    padding: 13px;
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: grab;
+    transition: .3s;
+    user-select: none;
+}
+
+.elemento:hover {
+    transform: translateY(-3px);
+    background: #704052;
+}
+
+.elemento span {
+    font-size: 28px;
+}
+
+.elemento.usado {
+    opacity: .3;
+    cursor: default;
+}
+
+/* MENSAJES */
+
+#mensaje {
+    text-align: center;
+    margin: 20px 0;
+    color: #f6c75b;
+    font-size: 17px;
+    min-height: 25px;
+}
+
+.completado {
+    display: none;
+    text-align: center;
+    background: #49213a;
+    border: 2px solid #f6bd55;
+    border-radius: 15px;
+    padding: 25px;
+    margin-top: 20px;
+}
+
+.completado h2 {
+    color: #f6bd55;
+    margin-bottom: 12px;
+}
+
+button {
+    background: #d99032;
+    color: #24101f;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+button:hover {
+    background: #ffc35b;
+}
+
+footer {
+    text-align: center;
+    padding: 25px;
+    color: #bd927b;
+    font-size: 13px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width: 750px) {
+    .contenido {
+        grid-template-columns: 1fr;
+    }
+
+    .bandeja {
+        order: -1;
+    }
+
+    .espacio {
+        width: 72px;
+        height: 68px;
+    }
+
+    .nivel {
+        padding: 10px 5px;
+        gap: 6px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="decoracion">✿ ✧ 🏵 ✧ ✿</div>
+    <h1>Ofrenda del Día de Muertos</h1>
+    <p>Una tradición llena de amor, recuerdos y colores</p>
+</header>
+
+<main class="contenedor">
+
+    <section class="progreso">
+        <h3>✦ Construye tu altar ✦</h3>
+        <p id="contador">0 de 8 elementos colocados</p>
+        <br>
+        <div class="barra">
+            <div class="relleno" id="relleno"></div>
+        </div>
+    </section>
+
+    <div class="contenido">
+
+        <section class="area-altar">
+            <h2>✧ MI OFRENDA ✧</h2>
+
+            <div class="nivel">
+                <div class="espacio" data-id="cruz">✧</div>
+                <div class="espacio" data-id="velas">✧</div>
+            </div>
+
+            <div class="nivel">
+                <div class="espacio" data-id="foto">✧</div>
+                <div class="espacio" data-id="flores">✧</div>
+                <div class="espacio" data-id="pan">✧</div>
+            </div>
+
+            <div class="nivel">
+                <div class="espacio" data-id="agua">✧</div>
+                <div class="espacio" data-id="sal">✧</div>
+                <div class="espacio" data-id="comida">✧</div>
+            </div>
+
+            <div class="base"></div>
+
+            <div id="mensaje">
+                Coloca los elementos en sus espacios correspondientes.
+            </div>
+
+            <div class="completado" id="completado">
+                <h2>🏵 ¡Felicidades! 🏵</h2>
+                <p>Has terminado de construir tu ofrenda del Día de Muertos.</p>
+                <p>¡La tradición y los recuerdos mantienen viva nuestra cultura!</p>
+                <button onclick="reiniciar()">Crear otro altar</button>
+            </div>
+
+        </section>
+
+        <aside class="bandeja">
+            <h2>✿ Elementos ✿</h2>
+            <p>Arrastra cada elemento hacia el altar.</p>
+
+            <div class="elemento" draggable="true" data-id="cruz">
+                <span>✝️</span> Cruz
+            </div>
+
+            <div class="elemento" draggable="true" data-id="velas">
+                <span>🕯️</span> Velas
+            </div>
+
+            <div class="elemento" draggable="true" data-id="foto">
+                <span>🖼️</span> Fotografía
+            </div>
+
+            <div class="elemento" draggable="true" data-id="flores">
+                <span>🌼</span> Cempasúchil
+            </div>
+
+            <div class="elemento" draggable="true" data-id="pan">
+                <span>🥖</span> Pan de muerto
+            </div>
+
+            <div class="elemento" draggable="true" data-id="agua">
+                <span>💧</span> Agua
+            </div>
+
+            <div class="elemento" draggable="true" data-id="sal">
+                <span>🧂</span> Sal
+            </div>
+
+            <div class="elemento" draggable="true" data-id="comida">
+                <span>🍎</span> Comida
+            </div>
+        </aside>
+
+    </div>
+</main>
+
+<footer>
+    ✧ Día de Muertos · Una tradición mexicana que vive en nuestros corazones ✧
+</footer>
+
+<script>
+let seleccion = null;
+let progreso = 0;
+
+const significados = {
+    cruz: "La cruz representa la fe y la protección espiritual.",
+    velas: "Las velas iluminan el camino de las almas.",
+    foto: "La fotografía recuerda a nuestros seres queridos.",
+    flores: "El cempasúchil guía a las almas con su aroma y color.",
+    pan: "El pan de muerto representa la fraternidad y el recuerdo.",
+    agua: "El agua calma la sed de las almas después de su viaje.",
+    sal: "La sal representa la purificación del alma.",
+    comida: "La comida representa la bienvenida y el cariño."
+};
+
+const elementos = document.querySelectorAll(".elemento");
+const espacios = document.querySelectorAll(".espacio");
+
+elementos.forEach(elemento => {
+
+    elemento.addEventListener("dragstart", () => {
+        if (elemento.classList.contains("usado")) return;
+        seleccion = elemento.dataset.id;
+    });
+
+});
+
+espacios.forEach(espacio => {
+
+    espacio.addEventListener("dragover", e => {
+        e.preventDefault();
+        espacio.style.background = "#744052";
+    });
+
+    espacio.addEventListener("dragleave", () => {
+        espacio.style.background = "";
+    });
+
+    espacio.addEventListener("drop", e => {
+        e.preventDefault();
+
+        if (!seleccion) return;
+
+        if (espacio.dataset.id === seleccion &&
+            !espacio.classList.contains("correcto")) {
+
+            const elemento = document.querySelector(
+                `.elemento[data-id="${seleccion}"]`
+            );
+
+            espacio.innerHTML = elemento.querySelector("span").innerHTML;
+            espacio.classList.add("correcto");
+
+            elemento.classList.add("usado");
+            elemento.draggable = false;
+
+            progreso++;
+
+            document.getElementById("contador").textContent =
+                progreso + " de 8 elementos colocados";
+
+            document.getElementById("relleno").style.width =
+                (progreso / 8 * 100) + "%";
+
+            document.getElementById("mensaje").textContent =
+                significados[seleccion];
+
+            if (progreso === 8) {
+                document.getElementById("completado").style.display = "block";
+                document.getElementById("mensaje").textContent =
+                    "¡Tu ofrenda está completa!";
+            }
+
+        } else {
+            document.getElementById("mensaje").textContent =
+                "Intenta colocar ese elemento en otro espacio.";
+        }
+
+        espacio.style.background = "";
+        seleccion = null;
+    });
+
+});
+
+function reiniciar() {
+    progreso = 0;
+    seleccion = null;
+
+    document.querySelectorAll(".espacio").forEach(espacio => {
+        espacio.innerHTML = "✧";
+        espacio.classList.remove("correcto");
+    });
+
+    elementos.forEach(elemento => {
+        elemento.classList.remove("usado");
+        elemento.draggable = true;
+    });
+
+    document.getElementById("contador").textContent =
+        "0 de 8 elementos colocados";
+
+    document.getElementById("relleno").style.width = "0%";
+
+    document.getElementById("mensaje").textContent =
+        "Coloca los elementos en sus espacios correspondientes.";
+
+    document.getElementById("completado").style.display = "none";
+}
+</script>
+
+</body>
+</html>
